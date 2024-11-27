@@ -85,7 +85,7 @@ services:
         condition: service_healthy
     volumes:
       # - ./configs/nomad.yaml:/app/nomad.yaml
-      - ./.volumes/fs:/app/.volumes/fs
+      - /data/nomad-oasis/.volumes/fs:/app/.volumes/fs
     command: python -m celery -A nomad.processing worker -l info -Q celery
 
   # nomad app (api + proxy)
@@ -145,7 +145,7 @@ services:
       NOMAD_MONGO_HOST: mongo
     volumes:
       # - ./configs/nomad.yaml:/app/nomad.yaml
-      - ./.volumes/fs:/app/.volumes/fs
+      - /data/nomad-oasis/.volumes/fs:/app/.volumes/fs
       - /var/run/docker.sock:/var/run/docker.sock
     user: "1000:991"
     command: python -m nomad.cli admin run hub
@@ -178,7 +178,7 @@ services:
         condition: service_healthy
     volumes:
       # - ./configs/nomad.yaml:/app/nomad.yaml
-      - ./.volumes/fs:/app/.volumes/fs
+      - /data/nomad-oasis/.volumes/fs:/app/.volumes/fs
     command: python -m nomad.cli admin run logtransfer
     profiles: ["with_logtransfer"]
 

@@ -1,6 +1,8 @@
 services:
-  api_host: "localhost"
-  api_base_path: "/nomad-oasis"
+  api_host: 'kakarot'
+  api_base_path: '/nomad-oasis'
+  upload_limit: 10000
+  admin_user_id: 'e1e0a512-aa17-48a9-8073-9e05ec14c67f'
 
 oasis:
   is_oasis: true
@@ -11,12 +13,35 @@ north:
   tools:
     options:
       jupyter:
+        description: '### **Jupyter Notebook**: The Classic Notebook Interface
+
+
+          The Jupyter Notebook is the original web application for creating and sharing
+          computational documents. It offers a simple, streamlined, document-centric
+          experience.'
+        file_extensions:
+        - ipynb
+        icon: jupyter_logo.svg
         image: ghcr.io/fairmat-nfdi/nomad-distro-template/jupyter:main
+        image_pull_policy: Always
+        maintainer:
+        - email: markus.scheidgen@physik.hu-berlin.de
+          name: Markus Scheidgen
+        mount_path: /home/jovyan
+        path_prefix: lab/tree
+        privileged: false
+        short_description: Basic jupyter run with an empty notebook or on given notebook file.
+        with_path: true
+        external_mounts:
+          - host_path: /data/
+            bind: /home/jovyan/Nanonisdata
+            mode: ro
+
 
 meta:
-  deployment: "oasis"
-  deployment_url: "https://my-oasis.org/api"
-  maintainer_email: "me@my-oasis.org"
+  deployment: 'oasis'
+  deployment_url: 'https://kakarot.physik.hu-berlin.de/nomad-oasis/api'
+  maintainer_email: 'cojal@physik.hu-berlin.de'
 
 logstash:
   enable: false
@@ -27,3 +52,18 @@ mongo:
 elastic:
   entries_index: nomad_oasis_entries_v1
   materials_index: nomad_oasis_materials_v1
+
+plugins:
+    include:
+      - nomad_analysis.general:schema
+      - nomad_analysis.jupyter:schema
+      - "nomad_material_processing:schema"
+      - "nomad_material_processing.solution:schema"
+      - "nomad_material_processing.vapor_deposition.cvd:schema"
+      - "nomad_material_processing.vapor_deposition.pvd:schema"
+      - "nomad_material_processing.vapor_deposition.pvd:mbe_schema"
+      - "nomad_material_processing.vapor_deposition.pvd:pld_schema"
+      - "nomad_material_processing.vapor_deposition.pvd:sputtering_schema"
+      - "nomad_material_processing.vapor_deposition.pvd:thermal_schema"
+      - "nomad_measurements.general:schema"
+      - "nomad_measurements.xrd:parser"
