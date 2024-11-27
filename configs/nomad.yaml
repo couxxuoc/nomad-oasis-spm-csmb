@@ -22,7 +22,7 @@ north:
         file_extensions:
         - ipynb
         icon: jupyter_logo.svg
-        image: ghcr.io/fairmat-nfdi/nomad-distro-template/jupyter:main
+        image: ghcr.io/couxxuoc/nomad-oasis-spm-csmb/jupyter:main
         image_pull_policy: Always
         maintainer:
         - email: markus.scheidgen@physik.hu-berlin.de
